@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Système de Café</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f3f3f3;
+      padding: 2rem;
+    }
+    .container {
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      max-width: 600px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: #6b4f1d;
+    }
+    ul {
+      padding-left: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Résumé de Commande Café</h1>
+    <p><strong>Stock :</strong> <span id="inventory"></span></p>
+    <p><strong>Café :</strong> <span id="coffee"></span></p>
+    <p><strong>Taille :</strong> <span id="size"></span></p>
+    <p><strong>Prix :</strong> <span id="price"></span> €</p>
+    <p><strong>Personnalisations :</strong></p>
+    <ul id="customizations"></ul>
+    <p><strong>Date :</strong> <span id="date"></span></p>
+  </div>
+
+  <script>
+    fetch('/data')
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('inventory').textContent = data.inventory;
+        document.getElementById('coffee').textContent = data.order.coffee.name;
+        document.getElementById('size').textContent = data.order.coffee.size;
+        document.getElementById('price').textContent = data.order.coffee.price;
+
+        const ul = document.getElementById('customizations');
+        data.order.customizations.forEach(c => {
+          const li = document.createElement('li');
+          li.textContent = `${c.name} (+${c.price} €)`;
+          ul.appendChild(li);
+        });
+
+        const date = new Date(data.order.date);
+        document.getElementById('date').textContent = date.toLocaleString('fr-FR');
+      });
+  </script>
+</body>
+</html>

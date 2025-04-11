@@ -1,0 +1,48 @@
++------------------------+
+|        Coffee          |
++------------------------+
+| - id: number           |
+| - name: string         |
+| - size: string         |
+| - price: number        |
++------------------------+
+| +constructor(id, name, size, price) |
++------------------------+
+
+* Composition avec →
+    Customization [0..*]
+
++---------------------------+
+|     Customization         |
++---------------------------+
+| - name: string            |
+| - price: number           |
++---------------------------+
+| +constructor(name, price) |
++---------------------------+
+
++-------------------------+
+|          DAO            |
++-------------------------+
+| - dbName: string        |
+| - db: IDBDatabase|null  |
++-------------------------+
+| +constructor(dbName)    |
+| - openDB(): Promise<void> |
+| +saveRecord(store, record) |
+| +getAllRecords(store)     |
++-------------------------+
+
++----------------------------------+
+|        InventoryManager          |
++----------------------------------+
+| - ingredients: Map<string, number> |
+| - static instance: InventoryManager | null |
++----------------------------------+
+| - constructor() (private)        |
+| +getInstance(): InventoryManager |
+| +addIngredient(name, qty)        |
+| +checkIngredient(name): number   |
++----------------------------------+
+
+
